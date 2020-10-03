@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace CourseManageUI
 {
-    public partial class Form1 : Form
+    public partial class FrmAddCourse : Form
     {
-        public Form1()
+        public FrmAddCourse()
         {
             InitializeComponent();
         }
