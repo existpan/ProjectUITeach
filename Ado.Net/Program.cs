@@ -5,20 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
+using System.Configuration;
+
 namespace Ado.Net
 {
     class Program
     {
         static void Main(string[] args)
         {
-            //ConnectDB();
-            //Console.WriteLine($"执行插入数据操作，受影响的返回行数是{Insert()}");
-            //Console.WriteLine($"执行修改数据操作，受影响的返回行数是{Update()}");
-            //Console.WriteLine($"执行修改数据操作，受影响的返回行数是{Delete()}");
-            object result= ExecuteScalar();
-            result.ToString();
-            Console.WriteLine($"执行单个结果查询操作，返回的是{result}");
-            ExecuteReader();
+            //AddCourse();
+            //UpdateCourse();
+            //DeleteCourse();
             Console.ReadKey();
         }
 
@@ -167,6 +164,32 @@ namespace Ado.Net
             {
                 Console.WriteLine("数据库连接已关闭……");
             }
+        }
+
+        static void ExecuteScalarByHelper()
+        {
+            string sql = "select count(*) as 课程总数 from Course";
+            object result = SQLHelper.ExecuteScalar(sql);
+            Console.WriteLine($"{result}");
+        }
+
+        static void AddCourse()
+        {
+            Course course = new Course {CourseName= Console.ReadLine(),CourseContent= "测试数据",ClassHour=200,Credit=10,CategoryId=10,TeacherId=1003};
+            int result = new CourseService().AddCourse(course);
+            Console.WriteLine($"增加了{result}行");
+        }
+        static void UpdateCourse()
+        {
+            Course course = new Course { CourseContent = "不是测试数据，是真数据",CourseId=1005 };
+            int result = new CourseService().Update(course);
+            Console.WriteLine($"修改了{result}行");
+        }
+        static void DeleteCourse()
+        {
+            Course course = new Course { CourseId = 1006 };
+            int result = new CourseService().Delete(course);
+            Console.WriteLine($"删除了{result}行");
         }
     }
 }
