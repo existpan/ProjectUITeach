@@ -16,6 +16,7 @@ namespace Ado.Net
             //AddCourse();
             //UpdateCourse();
             //DeleteCourse();
+            QueryCourseId();
             Console.ReadKey();
         }
 
@@ -172,24 +173,40 @@ namespace Ado.Net
             object result = SQLHelper.ExecuteScalar(sql);
             Console.WriteLine($"{result}");
         }
-
+        
+        /// <summary>
+        /// 添加课程
+        /// </summary>
         static void AddCourse()
         {
             Course course = new Course {CourseName= Console.ReadLine(),CourseContent= "测试数据",ClassHour=200,Credit=10,CategoryId=10,TeacherId=1003};
             int result = new CourseService().AddCourse(course);
             Console.WriteLine($"增加了{result}行");
         }
+
         static void UpdateCourse()
         {
             Course course = new Course { CourseContent = "不是测试数据，是真数据",CourseId=1005 };
             int result = new CourseService().Update(course);
             Console.WriteLine($"修改了{result}行");
         }
+
         static void DeleteCourse()
         {
             Course course = new Course { CourseId = 1006 };
             int result = new CourseService().Delete(course);
             Console.WriteLine($"删除了{result}行");
+        }
+
+        static void QueryCourseId()
+        {
+            Course course = new Course { CourseId = 1008 };
+            List<Course> courses = new CourseService().QueryCourseId(course);
+            foreach (var item in courses)
+            {
+                Console.WriteLine($"{item.CourseId}\t{item.CourseName}\t{item.CourseContent}\t{item.ClassHour}\t{item.Credit}");
+            }
+
         }
     }
 }
